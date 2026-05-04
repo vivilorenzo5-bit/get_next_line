@@ -6,7 +6,7 @@
 /*   By: vlourenc <vlourenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 17:13:51 by vlourenc          #+#    #+#             */
-/*   Updated: 2026/04/30 17:25:27 by vlourenc         ###   ########.fr       */
+/*   Updated: 2026/05/04 10:49:40 by vlourenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
 char	*substr(char *s, unsigned int start, size_t len);
-char	*ft_strdup(const char *s1);
 
 #endif
