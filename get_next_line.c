@@ -6,7 +6,7 @@
 /*   By: vlourenc <vlourenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 17:34:13 by vlourenc          #+#    #+#             */
-/*   Updated: 2026/05/04 11:18:50 by vlourenc         ###   ########.fr       */
+/*   Updated: 2026/05/04 13:06:35 by vlourenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,26 @@ char	*get_next_line(int fd)
 	stash = clean_stash(stash);
 	return (line);
 }
+
+char	*read_and_stash(int fd, char *stash)
+{
+	char	*buffer;
+	ssize_t	read_bytes;
+
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	read_bytes = 1;
+	while (read_bytes != 0)
+	{
+		read_bytes = read(fd, buffer, BUFFER_SIZE);
+		if (read_bytes == -1)
+			return (free(buffer), free(stash), stash = NULL, NULL);
+		buffer[read_bytes] = '\0';
+		stash = ft_strjoin(stash, buffer);
+		if (ft_strchr(buffer, '\n'))
+			break ;
+	}
+	return (free(buffer), stash);
+}
+
