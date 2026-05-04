@@ -6,7 +6,7 @@
 /*   By: vlourenc <vlourenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 17:55:07 by vlourenc          #+#    #+#             */
-/*   Updated: 2026/04/30 18:10:48 by vlourenc         ###   ########.fr       */
+/*   Updated: 2026/05/04 10:08:31 by vlourenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,49 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1)
 	{
 		s1 = malloc(1);
-		s1[0] == '\0';
+		s1[0] = '\0';
 	}
 	if (!s1 || !s2)
 		return (NULL);
+	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+		str[i++] = s2[j++];
 	return (str[i] = '\0', free(s1), str);
+}
+
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	char	*res;
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+	{
+		res = malloc(1);
+		if (!res)
+			return (NULL);
+		return (res[0] = '\0', res);
+	}
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	res = malloc(len + 1);
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (i < len && s[start + i])
+	{
+		res[i] = s[start + i];
+		i++;
+	}
+	return (res[i] = '\0', res);
 }
