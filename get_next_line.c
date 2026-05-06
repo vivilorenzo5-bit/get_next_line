@@ -6,7 +6,7 @@
 /*   By: vlourenc <vlourenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 17:34:13 by vlourenc          #+#    #+#             */
-/*   Updated: 2026/05/04 13:24:11 by vlourenc         ###   ########.fr       */
+/*   Updated: 2026/05/06 15:27:33 by vlourenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,21 @@ char	*extract_line(char *stash)
 	if (stash[i] == '\n')
 		line[i++] = '\n';
 	return (line[i] = '\0', line);
+}
+
+char	*clean_stash(char *stash)
+{
+	int		i;
+	char	*new_stash;
+
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	if (!stash[i])
+	{
+		free(stash);
+		return (NULL);
+	}
+	new_stash = ft_substr(stash, i + 1, ft_strlen(stash - i));
+	return (free(stash), new_stash);
 }
