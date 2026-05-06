@@ -6,26 +6,11 @@
 /*   By: vlourenc <vlourenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 17:34:13 by vlourenc          #+#    #+#             */
-/*   Updated: 2026/05/06 15:33:54 by vlourenc         ###   ########.fr       */
+/*   Updated: 2026/05/06 15:53:52 by vlourenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*get_next_line(int fd)
-{
-	static char	*stash;
-	char		*line;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	stash = read_and_stash(fd, stash);
-	if (!stash)
-		return (NULL);
-	line = extract_line(stash);
-	stash = clean_stash(stash);
-	return (line);
-}
 
 char	*read_and_stash(int fd, char *stash)
 {
@@ -63,7 +48,7 @@ char	*extract_line(char *stash)
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (stash[i] && stash != '\n')
+	while (stash[i] && stash[i] != '\n')
 	{
 		line[i] = stash[i];
 		i++;
@@ -81,13 +66,28 @@ char	*clean_stash(char *stash)
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	if (!stash[i])
+	if (!stash[i] || !stash[i + 1])
 	{
 		free(stash);
 		return (NULL);
 	}
-	new_stash = ft_substr(stash, i + 1, ft_strlen(stash - i));
+	new_stash = ft_substr(stash, i + 1, ft_strlen(stash) - i);
 	return (free(stash), new_stash);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*stash;
+	char		*line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	stash = read_and_stash(fd, stash);
+	if (!stash)
+		return (NULL);
+	line = extract_line(stash);
+	stash = clean_stash(stash);
+	return (line);
 }
 
 #include <fcntl.h>
