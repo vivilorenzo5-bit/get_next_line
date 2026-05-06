@@ -6,7 +6,7 @@
 /*   By: vlourenc <vlourenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 17:34:13 by vlourenc          #+#    #+#             */
-/*   Updated: 2026/05/06 15:27:33 by vlourenc         ###   ########.fr       */
+/*   Updated: 2026/05/06 15:33:54 by vlourenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,33 @@ char	*clean_stash(char *stash)
 	}
 	new_stash = ft_substr(stash, i + 1, ft_strlen(stash - i));
 	return (free(stash), new_stash);
+}
+
+#include <fcntl.h>
+#include <stdio.h>
+
+int	main(void)
+{
+	int		fd;
+	char	*line;
+	int		count;
+
+	count = 1;
+	// Abre um ficheiro para leitura
+	fd = open("teste.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Erro ao abrir o ficheiro!\n");
+		return (1);
+	}
+
+	// Loop para ler o ficheiro linha a linha
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("Linha [%d]: %s", count++, line);
+		free(line); // MUITO IMPORTANTE: libertar a linha devolvida pelo GNL
+	}
+	
+	close(fd);
+	return (0);
 }
